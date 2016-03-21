@@ -1,0 +1,7 @@
+util/LinkManager.class
+util/StepSupport.class
+pages/CheckoutPage.class
+util/EvidenceSteps.class
+util/RestSupport.class
+util/PageManager.class
+pages/BobKanuiLogin.class
