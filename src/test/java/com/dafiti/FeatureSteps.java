@@ -2,6 +2,7 @@ package com.dafiti;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -26,8 +27,11 @@ public class FeatureSteps {
 	private EvidenceSteps evidenceSteps;
 	private CheckoutPage checkout;
 	private BobLogin bobLogin;
+	private BobDafitiHome bobDafiti;
 	private BobKanuiHome bobKanui;
 	private BobKanuiPET bobKanuiPET;
+	private BobDafitiVouchers bobDafitiVouchers;
+	private BobDafitiProductImport bobDafitiProductImport;
 		
 	
 	@Before
@@ -41,9 +45,12 @@ public class FeatureSteps {
 		this.pgManager = new PageManager(this.driver);		
 		this.checkout = new CheckoutPage(this.driver);
 		this.bobLogin = new BobLogin(this.driver);
+		this.bobDafiti = new BobDafitiHome(this.driver);
 		this.bobKanui = new BobKanuiHome(this.driver);
 		this.bobKanuiPET = new BobKanuiPET(this.driver);
-		this.evidenceSteps = new EvidenceSteps("/home/murinha/projetos/bdd-mktplace/Evidences/");		
+		this.bobDafitiVouchers = new BobDafitiVouchers(this.driver);
+		this.bobDafitiProductImport = new BobDafitiProductImport(this.driver);
+		this.evidenceSteps = new EvidenceSteps("/home/evelyn/Projetos/bdd-java-mktplace/Evidences/");		
 		this.scenario = _scenario;
 	}
 	
@@ -59,41 +66,100 @@ public class FeatureSteps {
 		this.link.ClickOnLink(linkName);		
 		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_click_on_link_"+linkName);
 	}
-	
-	
-	
-	@When("^i fill field \"(.*?)\" with value \"(.*?)\" in \"(.*?)\"$")
-	public void i_fill_field_with_value_in(String fieldName, String value, String pageName) throws Throwable {
+		
+	@When("^i fill field \"(.*?)\" with value \"(.*?)\" in \"(.*?)\" page$")
+	public void i_fill_field_with_value_in_page(String fieldName, String fieldValue, String pageName) throws Throwable {
 	    
 		switch (pageName){
 		case "Bob - Login":
-			this.bobLogin.FillField(fieldName, value);
+			this.bobLogin.FillField(fieldName, fieldValue);
 			break;
-		
+		case "Template Management":
+			this.bobDafitiVouchers.FillField(fieldName, fieldValue);
+			break;
 		default:
 			break;
 		}
 		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_fill_field_with_value_in"+pageName);
 	}
 
-	@When("^i click on button \"(.*?)\" in \"(.*?)\"$")
-	public void i_click_on_button_in(String button, String pageName) throws Throwable {
+	@When("^i click on button \"(.*?)\" in \"(.*?)\" page$")
+	public void i_click_on_button_in_page(String button, String pageName) throws Throwable {
 		
 		switch (pageName){
 		case "Bob - Login":
 			this.bobLogin.ClickOnButton(button);
+			break;
+		
+		case "Product import":
+			this.bobDafitiProductImport.ClickOnButton(button);
+			break;
+			
+		default:
+			
 		}
 		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_click_on_button_in"+pageName);
 	}
 	
+	@When("^i click on \"(.*?)\" icon on \"(.*?)\" page$")
+	public void i_click_on_icon_on_page(String icon, String pageName)throws Throwable {
+				
+		switch (pageName){
+		case "Vouchers":
+			this.bobDafitiVouchers.ClickOnIcon(icon);
+	      	this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_click_on_icon_on_page");
+	      	break;
+	     
+		case "Product import":
+			this.bobDafitiProductImport.ClickOnIcon(icon);
+	      	this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_click_on_icon_on_page");
+			break;
+		
+		default:
+			throw new NoSuchElementException("Icon ' "+icon+" ' not found");
+			
+		}
+	}
+	
+	@When("^i select \"(.*?)\" option in \"(.*?)\" page$")
+	public void i_select_option_in_page(String option, String pageName) throws Throwable {
+	   		
+		switch (pageName){
+		case "Vouchers":
+			this.bobDafitiVouchers.SelectOption(option);
+			break;
+		case "Product import":
+			this.bobDafitiProductImport.SelectOption(option);
+			break;
+		
+		default:
+			throw new NoSuchElementException("Option ' "+option+" ' not found");
+			
+		}
+	    
+	    this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_select_option");
+	}
+	
+	@When("^i upload file \"(.*?)\" on \"(.*?)\" path$")
+	public void i_upload_file_on_path(String file, String path) throws Throwable {
+
+	    
+	}
+	
+	
+	
 	/*========Kanui===========*/
 	
-	@When("^i mouseover on \"(.*?)\" menu, click on \"(.*?)\" option in \"(.*?)\"$")
-	public void i_mouseover_on_menu_click_on_option_in(String menu, String option, String pageName) throws Throwable {
+	@When("^i mouseover on \"(.*?)\" menu, click on \"(.*?)\" option in \"(.*?)\" page$")
+	public void i_mouseover_on_menu_click_on_option_in_page(String menu, String option, String pageName) throws Throwable {
 		
 		switch (pageName){
 		case "Bob Kanui":
 			this.bobKanui.MouseoverMenuClickOption(menu, option);
+			break;
+			
+		case "Bob Dafiti":
+			this.bobDafiti.MouseoverMenuClickOption(menu, option);
 			break;
 		
 		default:
@@ -101,6 +167,13 @@ public class FeatureSteps {
 		}
 
 	}
+	
+	/*@When("^i click on \"(.*?)\" menu, \"(.*?)\" submenu$")
+	public void i_click_on_menu_submenu(String mainMenu, String subMenu) throws Throwable {
+	   this.bobDafiti.ClickOnMenuSubMenu("Bob", mainMenu, subMenu);
+	   this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_click_on_menu_submenu");
+	  	   
+	}*/
 	
 	@When("^i search a product by \"(.*?)\" with value \"(.*?)\"$")
 	public void i_search_a_product_by_with_value(String filter, String value) throws Throwable {
@@ -113,15 +186,10 @@ public class FeatureSteps {
 		this.bobKanuiPET.SelectProduct();
 	    
 	}
-
-
 	
 	
-	@Then("^i wait for \"(.*?)\" page to load$")
-	public void i_wait_for_page_to_load(String pageName) throws Exception{
-		this.pgManager.WaitPageToLoad(pageName);
-		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_wait_for_page_to_load_"+pageName);		
-	}
+	
+	
 	
 		
 	//======================================Mkt-Place===============================================//
@@ -174,9 +242,12 @@ public class FeatureSteps {
 		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_will_see_page_"+pageName);
 	}
 	
+	@Then("^i wait for \"(.*?)\" page to load$")
+	public void i_wait_for_page_to_load(String pageName) throws Exception{
+		this.pgManager.WaitPageToLoad(pageName);
+		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_wait_for_page_to_load_"+pageName);		
+	}
 	
-	
-
 	
 	@After
 	public void afterScenario() {

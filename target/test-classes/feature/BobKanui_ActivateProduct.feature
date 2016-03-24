@@ -1,5 +1,5 @@
 Feature: BobKanui - Activate Product
-@mktplace
+
 Scenario:  Bob Kanui - Activate Product
 	Given that i am at "http://rocket:rock4me@bob-shopsellercenter.kanui.net.br/" url
 	And i wait for "Login" page to load
@@ -12,7 +12,3 @@ Scenario:  Bob Kanui - Activate Product
 	And i wait for "PET" page to load
 	And i search a product by "name" with value "Evelyn"
 	And i select the product
-	
-	
-	
-	
