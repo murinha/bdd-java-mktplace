@@ -5,14 +5,18 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
 public class BobDafitiHome {
 	
 	private WebDriver driver;
-	WebElement we = null;
-	WebElement we1 = null;
+	private WebElement we = null;
+	private WebElement we1 = null;
+	private WebElement myDynamicElement;
+	
 	
 	public BobDafitiHome (WebDriver _driver)
 	{
@@ -23,6 +27,8 @@ public class BobDafitiHome {
 	public void VerifyMenu (String mainMenu)throws NoSuchElementException
 	{
 		String xpathElement = "";
+		
+		myDynamicElement = (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.id("navigation")));
 		switch (mainMenu)
 		{
 		

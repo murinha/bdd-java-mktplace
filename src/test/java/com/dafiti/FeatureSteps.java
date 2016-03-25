@@ -12,8 +12,9 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import pages.*;
 import util.*;
+import pages.*;
+
 
 public class FeatureSteps {	
 	private WebDriver driver;
@@ -142,6 +143,7 @@ public class FeatureSteps {
 	
 	@When("^i upload file \"(.*?)\" on \"(.*?)\" path$")
 	public void i_upload_file_on_path(String file, String path) throws Throwable {
+		this.bobDafitiProductImport.SelectFile(file, path);
 
 	    
 	}
@@ -235,11 +237,18 @@ public class FeatureSteps {
 	}	
 	//======================================Mkt-Place===============================================//	
 	
-	@Then("^i will see \"(.*?)\" page$")
-	public void i_will_see_page(String pageName) throws Throwable {
-		Thread.sleep(5000);
-		this.pgManager.WaitPageToLoad(pageName);
-		this.evidenceSteps.takeAPrint(this.scenario.getName(),"i_will_see_page_"+pageName);
+	@Then("^i will see \"(.*?)\" in \"(.*?)\" page$")
+	public void i_will_see_in_page(String value, String pageName) throws Throwable {
+		
+		switch (pageName){
+		case "Product Import":
+			
+			break;
+		default:
+			break;
+		
+		}
+		
 	}
 	
 	@Then("^i wait for \"(.*?)\" page to load$")

@@ -9,8 +9,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import junit.framework.AssertionFailedError;
-
 public class BobKanuiPET {
 	
 	private WebDriver driver;
@@ -24,7 +22,7 @@ public class BobKanuiPET {
 		
 	}
 	
-	public boolean SearchProductByValue(String filter, String value) throws NoSuchElementException, InterruptedException, AssertionError, AssertionFailedError{
+	public boolean SearchProductByValue(String filter, String value) throws NoSuchElementException, InterruptedException, AssertionError{
 		Actions action = new Actions(driver);
 		weMain = null;
 		weFilter = null;

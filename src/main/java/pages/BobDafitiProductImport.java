@@ -1,5 +1,6 @@
 package pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,47 +23,73 @@ public class BobDafitiProductImport {
 		this.driver = _driver;
 	}
 	
-	public void ClickOnIcon(String icon) throws Throwable{
-		
-		String idElement="";
 
-				
+	
+	
+	
+	public void ClickOnIcon(String icon) throws Throwable{
+		Actions action = new Actions (driver);
+		we = null;
+			
 		switch (icon){
 		case "Attribute Set":
-			idElement = "ext-comp-1005";
+			this.driver.findElement(By.id("ext-comp-1005")).click();
 			break;
-				
+		
+		case "Refresh":
+			this.driver.navigate().refresh();
+			myDynamicElement = (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.id("ext-comp-1005")));
+			//action.moveToElement(this.driver.findElement(By.xpath("//*[@id='ext-gen38']"))).click().build().perform();
+			//we = this.driver.findElement(By.className("refresh"));
+			break;
+		
+		case "Preview":
+			action.moveToElement(this.driver.findElement(By.xpath("//*[@class='status-processed'][last()]/a[1]"))).click().build().perform();
+			myDynamicElement = (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.id("submitimport")));
+			break;
+			
+		case "Download":
+			action.moveToElement(this.driver.findElement(By.xpath("//*[@class='status-imported'][last()]/a[2]"))).click().build().perform();
+			myDynamicElement = (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.id("catalog_import_result")));
+			break;
+			
 		default:
 			throw new NoSuchElementException("Icon ' "+icon+" ' not found");
 		}
-		this.driver.findElement(By.id(idElement)).click();
+		//we.click();
 	}
 	
 	public void ClickOnButton (String button) throws Throwable{
-		String classElement = "";
+		we = null;
 		
 		switch (button){
 		case "Browse":
-			classElement = "x-form-file";
+			we =  this.driver.findElement(By.xpath("//*[contains(text(), 'Browse')]"));
 			break;
 		case "Upload file":
+			we = this.driver.findElement(By.xpath("//*[contains(text(), 'Upload file')]"));
+			break;
 		case "OK":
-			classElement = "x-btn-mc";
+			myDynamicElement = (new WebDriverWait(driver, 40)).until(ExpectedConditions.elementToBeClickable(By.className("x-btn-mc")));
+			we = this.driver.findElement(By.xpath("//*[contains(text(), 'OK')]"));
+			break;
+			
+		case "Update products":
+			we = this.driver.findElement(By.id("submitimport"));
 			break;
 				
 		default:
 			throw new NoSuchElementException("Button ' "+button+" ' not found");
 			
 		}
-		this.driver.findElement(By.className(classElement)).click();
+		we.click();
 	
 	}
 	
 	public void SelectFile (String file, String path) throws Throwable{
 		
-		((JavascriptExecutor) driver).executeScript("document.getElementsById('ext-comp-1006'.removeAttribute('readonly');");
-	    this.driver.findElement(By.id("ext-comp-1006")).sendKeys(path + file);
-	    
+		//((JavascriptExecutor) driver).executeScript("document.getElementsById('ext-comp-1006'.removeAttribute('readonly');");
+	    this.driver.findElement(By.id("ext-comp-1006-file")).sendKeys(path+file);
 	}
 	    
 	    
