@@ -1,5 +1,5 @@
 Feature: Bob Dafiti - Product Creation
-@teste
+
 
 Scenario: Product Creation
 	Given that i am at "http://bob.aws.dafitierp.com.br/" url

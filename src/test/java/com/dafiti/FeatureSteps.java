@@ -51,7 +51,7 @@ public class FeatureSteps {
 		this.bobKanuiPET = new BobKanuiPET(this.driver);
 		this.bobDafitiVouchers = new BobDafitiVouchers(this.driver);
 		this.bobDafitiProductImport = new BobDafitiProductImport(this.driver);
-		this.evidenceSteps = new EvidenceSteps("/home/evelyn/Projetos/bdd-java-mktplace/Evidences/");		
+		this.evidenceSteps = new EvidenceSteps("/home/murinha/projetos/bdd-java-mktplace/Evidences/");		
 		this.scenario = _scenario;
 	}
 	
